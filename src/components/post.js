@@ -6,21 +6,36 @@ import Comment from "./comment";
 let e = React.createElement;
 
 export default class Post extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            comments: props.comments,
+            content: props.content
+        };
+    }
+
     render() {
+        
+        let comments;
+        if (this.state.comments) {
+            comments = this.state.comments.map((comment, index) => <Comment key = {index} {...comment} />);
+            // for (let comment of this.state.comments) {
+            //     comments.push(<Comment {...comment} />)
+            // }
+        }
+
         return (
             <div className="card w-75">
-                <div className="card-header bg-success text-white">
+                <div className="card-header bg-primary text-white">
                     Username and Time
                 </div>
                 <div className="card-body">
-                    This is where our content goes
+                    {this.state.content}
                 </div>
                 <div className="card-footer">
                     <LikeButton/> <ReplyButton/>
                     <br></br>
-                    <Comment />
-                    <Comment />
-                    <Comment />
+                    {comments}
                 </div>
             </div>
         )
